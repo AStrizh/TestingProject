@@ -1,0 +1,31 @@
+The Register Tests
+
+Testing Sections:
+
+Open Webpage
+	check url and title
+
+Front Page check
+	get top article (maybe other articles too)
+	Test headlines (they change how do we get an assert? Maybe char length, example assert title not empy or >20 char)
+
+Headline Check	
+	open top article
+	get headline
+	get author name (character check of some sort)
+	get article time (make sure year is not >2024 or <1990)
+	click on one of the share icons (check that it opened some dialogue, assert=Send the following on WhatsApp)
+		this will open a new window and we will have to handle that and close it properly
+	click on comments like in top left (this will go to forums page, we can check that)	
+	Get first comment and print it out
+	get commentator's name 
+
+visit author (cant we open new tab)
+		check url
+		check author's name
+		get author's past articles
+		close window
+
+visit commentator (also new tab)
+		**Sometimes top comment is from anonymous (can can test that too)
+		Check past comments or articles they posted
