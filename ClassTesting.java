@@ -18,6 +18,8 @@ public class ClassTesting {
 
     private static final String URL = "https://www.theregister.com/";
 
+    private static final String SSDIRECTORY = "";
+
 
     // //initiate driver
     // @Test(priority = 1)
