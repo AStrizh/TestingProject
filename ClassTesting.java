@@ -51,59 +51,7 @@ public class ClassTesting {
         mainWindow = driver.getWindowHandle();
     }
 
-    @Test(priority = 3)
-    void search_test() throws InterruptedException {
-        driver.findElement(By.cssSelector(".nav_search.topnav_elem")).click();
-
-        //Types in the search term "testing" and submits the search
-        Thread.sleep(2000);
-        driver.findElement(By.id("q")).sendKeys("testing");
-        driver.findElement(By.id("q")).submit();
-
-        //Gets the current URL
-        String current = driver.getCurrentUrl();
-        System.out.println("Current URL: " + current);
-
-        //Gets the title
-        String title = driver.getTitle();
-        System.out.println("Title Name: " + title);
-
-        //Prints the total number of elements
-        List<WebElement> elements = driver.findElements(By.tagName("a"));
-        System.out.println("Number of Web Elements: " + elements.size());
-
-        System.out.println("Web Elements listed below: ");
-        System.out.println("\n");
-        System.out.println("----------------------------------------------------------");
-
-        //Prints the names of all the elements
-        //Blank check is necessary because there were a lot of elements that just return blank lines
-        for (WebElement l:elements)
-        {
-            if(!isEmptyString(l.getText()) )
-                System.out.println(l.getText());
-        }
-
-        Thread.sleep(2000);
-
-        driver.findElement(By.className("story_link")).click();
-        Thread.sleep(3000);
-    }
-
-    @Test(priority = 4)
-    void login_test() throws InterruptedException {
-        //go to log in link
-        driver.findElement(By.id("mob_user_link")).click();
-        //enter username
-        driver.findElement(By.id("email")).sendKeys(USER);
-        Thread.sleep(1000);
-        //enter password
-        driver.findElement(By.name("password")).sendKeys(PASS);
-        driver.findElement(By.name("login")).click();
-        Thread.sleep(1000);
-    }
-
-    @Test(priority = 5)
+    @Test(priority = 2)
     void open_headline() throws InterruptedException {
 
         List<WebElement> elements = driver.findElements(By.cssSelector("#index_page > div"));
@@ -114,8 +62,9 @@ public class ClassTesting {
         Thread.sleep(1000);
         System.out.println(driver.findElement(By.className("header_right")).getText());
     }
-    
-    @Test(priority = 4)
+
+  
+    @Test(priority = 3)
     void inspect_author() throws InterruptedException {
 
         WebElement authorLink = driver.findElement(By.className("byline"));
@@ -167,7 +116,7 @@ public class ClassTesting {
         driver.switchTo().window(mainWindow);
     }
 
-    @Test(priority = 5)
+    @Test(priority = 4)
     void inspect_commenter() throws InterruptedException {
 
         Thread.sleep(1000);
@@ -217,8 +166,62 @@ public class ClassTesting {
         driver.switchTo().window(mainWindow);
         Thread.sleep(1000);
     }
+
     
+    @Test(priority = 5)
+    void search_test() throws InterruptedException {
+        driver.findElement(By.cssSelector(".nav_search.topnav_elem")).click();
+
+        //Types in the search term "testing" and submits the search
+        Thread.sleep(2000);
+        driver.findElement(By.id("q")).sendKeys("testing");
+        driver.findElement(By.id("q")).submit();
+
+        //Gets the current URL
+        String current = driver.getCurrentUrl();
+        System.out.println("Current URL: " + current);
+
+        //Gets the title
+        String title = driver.getTitle();
+        System.out.println("Title Name: " + title);
+
+        //Prints the total number of elements
+        List<WebElement> elements = driver.findElements(By.tagName("a"));
+        System.out.println("Number of Web Elements: " + elements.size());
+
+        System.out.println("Web Elements listed below: ");
+        System.out.println("\n");
+        System.out.println("----------------------------------------------------------");
+
+        //Prints the names of all the elements
+        //Blank check is necessary because there were a lot of elements that just return blank lines
+        for (WebElement l:elements)
+        {
+            if(!isEmptyString(l.getText()) )
+                System.out.println(l.getText());
+        }
+
+        Thread.sleep(2000);
+
+        driver.findElement(By.className("story_link")).click();
+        Thread.sleep(3000);
+    }
+
     @Test(priority = 6)
+    void login_test() throws InterruptedException {
+        //go to log in link
+        driver.findElement(By.id("mob_user_link")).click();
+        //enter username
+        driver.findElement(By.id("email")).sendKeys(USER);
+        Thread.sleep(1000);
+        //enter password
+        driver.findElement(By.name("password")).sendKeys(PASS);
+        driver.findElement(By.name("login")).click();
+        Thread.sleep(1000);
+    }
+
+    
+    @Test(priority = 7)
     void open_article() throws InterruptedException {
         driver.get("https://www.theregister.com/");
         List<WebElement> links = driver.findElements(By.tagName("a"));
@@ -257,7 +260,7 @@ public class ClassTesting {
         js.executeScript("window.scrollBy(0,-3000)", "");
     }
 
-     @Test(priority = 7)
+     @Test(priority = 8)
     void comment_testing() throws InterruptedException {
         String comments = driver.findElement(By.className("comment_count")).getAttribute("href");
         driver.get(comments);
