@@ -98,7 +98,27 @@ public class ClassTesting {
         Thread.sleep(1000);
         System.out.println(driver.findElement(By.className("header_right")).getText());
     }
+    
+    @Test(priority = 4)
+    void inspect_author() throws InterruptedException {
 
+        WebElement authorLink = driver.findElement(By.className("byline"));
+        System.out.println(authorLink.getText());
+        System.out.println(authorLink.getAttribute("href"));
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.open(arguments[0]);", authorLink.getAttribute("href"));
+
+
+        for (String windowHandle : driver.getWindowHandles()){
+            if (!mainWindow.contentEquals((windowHandle))) {
+                driver.switchTo().window(windowHandle);
+            }
+        }
+        
+        Thread.sleep(1000);
+        System.out.println("Title :" + driver.getTitle() + " URL: " + driver.getCurrentUrl());
+    }
     
     @Test(priority = 6)
     void open_article() throws InterruptedException {
