@@ -150,6 +150,57 @@ public class ClassTesting {
         //switch focus back to main window
         driver.switchTo().window(mainWindow);
     }
+
+    @Test(priority = 5)
+    void inspect_commenter() throws InterruptedException {
+
+        Thread.sleep(1000);
+        WebElement commentsLink = driver.findElement(By.className("comment_count"));
+        System.out.println(commentsLink.getText());
+        System.out.println(commentsLink.getAttribute("href"));
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.open(arguments[0]);", commentsLink.getAttribute("href"));
+
+
+        for (String windowHandle : driver.getWindowHandles()){
+            if (!mainWindow.contentEquals((windowHandle))) {
+                driver.switchTo().window(windowHandle);
+            }
+        }
+
+        String commentsHandle = driver.getWindowHandle();
+
+        Thread.sleep(5000);
+        System.out.println("Title :" + driver.getTitle() + " URL: " + driver.getCurrentUrl());
+
+        WebElement commentAuthors = driver.findElements(By.className("author")).get(0);
+        System.out.println(commentAuthors.getText());
+        commentAuthors.click();
+
+        if(driver.getWindowHandles().size() > 2){
+            for (String windowHandle : driver.getWindowHandles()){
+                if (!mainWindow.contentEquals((windowHandle))) {
+                    driver.switchTo().window(windowHandle);
+                }
+            }
+            driver.close();
+        }
+
+        driver.switchTo().window(commentsHandle);
+
+        Thread.sleep(1000);
+        WebElement comments = driver.findElements(By.className("content")).get(0);
+        System.out.println(comments.getText());
+
+        Thread.sleep(1000);
+        driver.close();
+
+
+        //switch focus back to main window
+        driver.switchTo().window(mainWindow);
+        Thread.sleep(1000);
+    }
     
     @Test(priority = 6)
     void open_article() throws InterruptedException {
