@@ -88,6 +88,19 @@ public class ClassTesting {
     }
 
     @Test(priority = 3)
+    void open_headline() throws InterruptedException {
+
+        List<WebElement> elements = driver.findElements(By.cssSelector("#index_page > div"));
+        WebElement link = elements.get(0).findElements(By.tagName("a")).get(0);
+        System.out.println(link.getAttribute("href"));
+        link.click();
+
+        Thread.sleep(1000);
+        System.out.println(driver.findElement(By.className("header_right")).getText());
+    }
+
+    
+    @Test(priority = 3)
     void open_article() throws InterruptedException {
         List<WebElement> links = driver.findElements(By.tagName("a"));
         int count = 0;
