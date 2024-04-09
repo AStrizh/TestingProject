@@ -153,14 +153,33 @@ public class ClassTesting {
     
     @Test(priority = 6)
     void open_article() throws InterruptedException {
+        driver.get("https://www.theregister.com/");
         List<WebElement> links = driver.findElements(By.tagName("a"));
-        int count = 0;
+        ArrayList <String> archived_links = new ArrayList();
         for (WebElement link : links) {
+            archived_links.add(link.getAttribute("href"));
             System.out.println(links.indexOf(link));
             System.out.println(link.getAttribute("href"));
         }
-        links.get(76).click();
-        Thread.sleep(1000);
+        int attempt = 83;
+        links.get(attempt).click();
+        Thread.sleep(2000);
+
+        boolean comments_exist = false;
+        while (!comments_exist) {
+            try {
+                driver.findElement(By.tagName("strong"));
+                comments_exist = true;
+            } catch (Exception e) {
+                System.out.println("Failed to find comments.");
+                attempt += 1;
+                System.out.println(attempt);
+                driver.get(archived_links.get(attempt));
+                Thread.sleep(2000);
+            }
+        }
+
+        Thread.sleep(2000);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,1000)", "");
         Thread.sleep(1000);
@@ -175,15 +194,26 @@ public class ClassTesting {
     void comment_testing() throws InterruptedException {
         String comments = driver.findElement(By.className("comment_count")).getAttribute("href");
         driver.get(comments);
-        Thread.sleep(1000);
-        driver.findElement(By.linkText("Post your comment")).click();
-        Thread.sleep(1000);
-        driver.findElement(By.id("title")).sendKeys("My Comment");
-        Thread.sleep(1000);
-        driver.findElement(By.id("body")).sendKeys("This was interesting!");
-        Thread.sleep(1000);
+        driver.findElement(By.className("up")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.linkText("Reply")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.id("body")).sendKeys("I agree!");
+        Thread.sleep(2000);
         //driver.findElement(By.name("post")).click();
-        Thread.sleep(10000);
+        Thread.sleep(2000);
+        driver.get(comments);
+        Thread.sleep(2000);
+        driver.findElement(By.linkText("Post your comment")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.id("title")).sendKeys("My Comment");
+        Thread.sleep(2000);
+        driver.findElement(By.id("body")).sendKeys("This was interesting!");
+        Thread.sleep(2000);
+        //driver.findElement(By.name("post")).click();
+        Thread.sleep(2000);
+        driver.get(comments);
+        Thread.sleep(2000);
     }
 
     //close web browser
