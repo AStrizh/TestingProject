@@ -87,7 +87,7 @@ public class ClassTesting {
         Thread.sleep(1000);
     }
 
-    @Test(priority = 3)
+    @Test(priority = 5)
     void open_headline() throws InterruptedException {
 
         List<WebElement> elements = driver.findElements(By.cssSelector("#index_page > div"));
@@ -100,7 +100,7 @@ public class ClassTesting {
     }
 
     
-    @Test(priority = 3)
+    @Test(priority = 6)
     void open_article() throws InterruptedException {
         List<WebElement> links = driver.findElements(By.tagName("a"));
         int count = 0;
@@ -120,7 +120,7 @@ public class ClassTesting {
         js.executeScript("window.scrollBy(0,-3000)", "");
     }
 
-     @Test(priority = 3)
+     @Test(priority = 7)
     void comment_testing() throws InterruptedException {
         String comments = driver.findElement(By.className("comment_count")).getAttribute("href");
         driver.get(comments);
@@ -136,7 +136,7 @@ public class ClassTesting {
     }
 
     //close web browser
-    @Test(priority = 7)
+    @Test(priority = 50)
     void close_driver() {
         driver.quit();
     }
