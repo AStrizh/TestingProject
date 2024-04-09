@@ -110,7 +110,6 @@ public class ClassTesting {
         }
         links.get(76).click();
         Thread.sleep(1000);
-
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,1000)", "");
         Thread.sleep(1000);
@@ -119,6 +118,10 @@ public class ClassTesting {
         js.executeScript("window.scrollBy(0,1000)", "");
         Thread.sleep(1000);
         js.executeScript("window.scrollBy(0,-3000)", "");
+    }
+
+     @Test(priority = 3)
+    void comment_testing() throws InterruptedException {
         String comments = driver.findElement(By.className("comment_count")).getAttribute("href");
         driver.get(comments);
         Thread.sleep(1000);
