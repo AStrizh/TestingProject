@@ -283,6 +283,83 @@ public class ClassTesting {
         Thread.sleep(2000);
     }
 
+        @Test(priority = 9)
+    void account_test() throws InterruptedException {
+        //go to log in link
+        driver.get(URL);
+        Thread.sleep(1000);
+        driver.findElement(By.id("mob_user_link")).click();
+
+        WebElement element;
+        String testString = "";
+
+        //My Details
+        testString = "My Details";
+        element = driver.findElement(By.xpath("//*[@id=\"settings_tab_nav\"]/li[1]/input"));
+        element.click();
+        Thread.sleep(1000);
+        WebElement detailsHeader = driver.findElement(By.cssSelector(".right_account h3"));
+        String details = detailsHeader.getText();
+        System.out.println(details);
+        Assert.assertEquals(details,testString);
+
+        //Newsletters
+        testString = "Newsletters";
+        element = driver.findElement(By.xpath("//*[@id=\"settings_tab_nav\"]/li[2]/input"));
+        element.click();
+        Thread.sleep(1000);
+        WebElement newsHeader = driver.findElement(By.cssSelector(".right_account h3"));
+        String newsHeaderText = newsHeader.getText();
+        Assert.assertEquals(newsHeaderText,testString);
+
+        //My Comments
+        testString = "My Comments";
+        element = driver.findElement(By.xpath("//*[@id=\"settings_tab_nav\"]/li[3]/input"));
+        element.click();
+        Thread.sleep(1000);
+        WebElement commHeader = driver.findElement(By.cssSelector(".right_account h3"));
+        String commHeaderText = commHeader.getText();
+        Assert.assertEquals(commHeaderText,testString);
+
+        //My Settings
+        testString = "My Settings";
+        element = driver.findElement(By.xpath("//*[@id=\"settings_tab_nav\"]/li[4]/input"));
+        element.click();
+        Thread.sleep(1000);
+        WebElement settHeader = driver.findElement(By.cssSelector(".right_account h3"));
+        String settHeaderText = settHeader.getText();
+        Assert.assertEquals(settHeaderText,testString);
+
+        //My Alerts
+        testString = "My Alerts";
+        element = driver.findElement(By.xpath("//*[@id=\"settings_tab_nav\"]/li[5]/input"));
+        element.click();
+        Thread.sleep(1000);
+        WebElement alertHeader = driver.findElement(By.cssSelector(".right_account h3"));
+        String alertHeaderText = alertHeader.getText();
+        Assert.assertEquals(alertHeaderText,testString);
+
+        //Change Password
+        testString = "Change Password";
+        element = driver.findElement(By.xpath("//*[@id=\"settings_tab_nav\"]/li[6]/input"));
+        element.click();
+        Thread.sleep(1000);
+        WebElement passHeader = driver.findElement(By.cssSelector(".right_account h3"));
+        String passHeaderText = passHeader.getText();
+        Assert.assertEquals(passHeaderText,testString);
+
+        //Delete Account
+        testString = "Delete account";
+        element = driver.findElement(By.xpath("//*[@id=\"settings_tab_nav\"]/li[8]/input"));
+        element.click();
+        Thread.sleep(1000);
+        WebElement deleteHeader = driver.findElement(By.cssSelector(".right_account h3"));
+        String deleteHeaderText = deleteHeader.getText();
+        Assert.assertEquals(deleteHeaderText,testString);
+
+        Thread.sleep(1000);
+    }
+
     //close web browser
     @Test(priority = 50)
     void close_driver() {
