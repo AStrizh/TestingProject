@@ -115,9 +115,40 @@ public class ClassTesting {
                 driver.switchTo().window(windowHandle);
             }
         }
-        
+
         Thread.sleep(1000);
         System.out.println("Title :" + driver.getTitle() + " URL: " + driver.getCurrentUrl());
+
+        try{
+            System.out.println(driver.findElement(By.className("columnist_blurb")).getText());
+        }catch (NoSuchElementException e){
+            System.out.println("This author does not have a bio.");
+        }
+
+
+        WebElement authorHeadlines = driver.findElement(By.className("headlines"));
+
+        // Find all article elements within authorHeadlines
+        List<WebElement> articles = authorHeadlines.findElements(By.tagName("article"));
+
+        if(articles.size()>5){
+            for(int i = 0; i<5; i++){
+                String articleText = articles.get(i).findElement(By.className("article_text_elements")).getText();
+                System.out.println(articleText);
+            }
+        }
+        else {
+            for (WebElement article : articles) {
+                // For each article, find the div with class 'article_text_elements' and get its text
+                String articleText = article.findElement(By.className("article_text_elements")).getText();
+                System.out.println(articleText);
+            }
+        }
+
+
+        driver.close();
+        //switch focus back to main window
+        driver.switchTo().window(mainWindow);
     }
     
     @Test(priority = 6)
