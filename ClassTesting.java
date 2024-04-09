@@ -16,23 +16,37 @@ public class ClassTesting {
     private static final String USER = "astrizhevskiy4134@eagle.fgcu.edu";
     private static final String PASS = "L5KYQB!W5Gbywri";
 
+    private static final String URL = "https://www.theregister.com/";
 
-    //initiate driver
-    @Test(priority = 1)
+
+    // //initiate driver
+    // @Test(priority = 1)
+    // void initiate_driver() {
+    //     System.setProperty("webdriver.chrome.driver", "C:\\Users\\abstr\\Documents\\FGCU\\Spring2024\\Testing\\Drivers\\ChromeDriver\\chromedriver.exe");
+    //     driver = new ChromeDriver();
+    // }
+
+    // //This test logs into The Register by entering texts into textboxes and submitting information.
+    // @Test(priority = 2)
+    // void register_test() throws InterruptedException {
+    //     driver.get("https://www.theregister.com/");
+    //     driver.manage().window().maximize();
+
+    //     //set main window
+    //     mainWindow = driver.getWindowHandle();
+    //     Thread.sleep(1000);
+    // }
+
+    @BeforeClass
     void initiate_driver() {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\abstr\\Documents\\FGCU\\Spring2024\\Testing\\Drivers\\ChromeDriver\\chromedriver.exe");
         driver = new ChromeDriver();
-    }
 
-    //This test logs into The Register by entering texts into textboxes and submitting information.
-    @Test(priority = 2)
-    void register_test() throws InterruptedException {
-        driver.get("https://www.theregister.com/");
+        driver.get(URL);
         driver.manage().window().maximize();
 
         //set main window
         mainWindow = driver.getWindowHandle();
-        Thread.sleep(1000);
     }
 
     @Test(priority = 3)
