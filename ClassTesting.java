@@ -4,10 +4,13 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.io.FileHandler;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClassTesting {
@@ -19,25 +22,6 @@ public class ClassTesting {
     private static final String URL = "https://www.theregister.com/";
 
     private static final String SSDIRECTORY = "";
-
-
-    // //initiate driver
-    // @Test(priority = 1)
-    // void initiate_driver() {
-    //     System.setProperty("webdriver.chrome.driver", "C:\\Users\\abstr\\Documents\\FGCU\\Spring2024\\Testing\\Drivers\\ChromeDriver\\chromedriver.exe");
-    //     driver = new ChromeDriver();
-    // }
-
-    // //This test logs into The Register by entering texts into textboxes and submitting information.
-    // @Test(priority = 2)
-    // void register_test() throws InterruptedException {
-    //     driver.get("https://www.theregister.com/");
-    //     driver.manage().window().maximize();
-
-    //     //set main window
-    //     mainWindow = driver.getWindowHandle();
-    //     Thread.sleep(1000);
-    // }
 
     @BeforeClass
     void initiate_driver() {
@@ -63,12 +47,13 @@ public class ClassTesting {
         System.out.println(driver.findElement(By.className("header_right")).getText());
     }
 
-  
+
     @Test(priority = 3)
     void inspect_author() throws InterruptedException {
 
         WebElement authorLink = driver.findElement(By.className("byline"));
         System.out.println(authorLink.getText());
+        String authorName = authorLink.getText();
         System.out.println(authorLink.getAttribute("href"));
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -83,6 +68,8 @@ public class ClassTesting {
 
         Thread.sleep(1000);
         System.out.println("Title :" + driver.getTitle() + " URL: " + driver.getCurrentUrl());
+
+        Assert.assertTrue(driver.getTitle().contains(authorName));
 
         try{
             System.out.println(driver.findElement(By.className("columnist_blurb")).getText());
@@ -109,7 +96,6 @@ public class ClassTesting {
                 System.out.println(articleText);
             }
         }
-
 
         driver.close();
         //switch focus back to main window
@@ -167,13 +153,13 @@ public class ClassTesting {
         Thread.sleep(1000);
     }
 
-    
+
     @Test(priority = 5)
     void search_test() throws InterruptedException {
         driver.findElement(By.cssSelector(".nav_search.topnav_elem")).click();
 
         //Types in the search term "testing" and submits the search
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         driver.findElement(By.id("q")).sendKeys("testing");
         driver.findElement(By.id("q")).submit();
 
@@ -185,23 +171,9 @@ public class ClassTesting {
         String title = driver.getTitle();
         System.out.println("Title Name: " + title);
 
-        //Prints the total number of elements
-        List<WebElement> elements = driver.findElements(By.tagName("a"));
-        System.out.println("Number of Web Elements: " + elements.size());
+        Thread.sleep(1000);
 
-        System.out.println("Web Elements listed below: ");
-        System.out.println("\n");
-        System.out.println("----------------------------------------------------------");
-
-        //Prints the names of all the elements
-        //Blank check is necessary because there were a lot of elements that just return blank lines
-        for (WebElement l:elements)
-        {
-            if(!isEmptyString(l.getText()) )
-                System.out.println(l.getText());
-        }
-
-        Thread.sleep(2000);
+        Assert.assertTrue(title.contains("Search results"));
 
         driver.findElement(By.className("story_link")).click();
         Thread.sleep(3000);
@@ -217,15 +189,18 @@ public class ClassTesting {
         //enter password
         driver.findElement(By.name("password")).sendKeys(PASS);
         driver.findElement(By.name("login")).click();
-        Thread.sleep(1000);
+        Thread.sleep(500);
+
+        String toastResponse = driver.findElement(By.className("toast_content")).getText();
+        Assert.assertTrue(toastResponse.contains("Thank you"));
     }
 
-    
+
     @Test(priority = 7)
     void open_article() throws InterruptedException {
         driver.get("https://www.theregister.com/");
         List<WebElement> links = driver.findElements(By.tagName("a"));
-        ArrayList <String> archived_links = new ArrayList();
+        ArrayList<String> archived_links = new ArrayList();
         for (WebElement link : links) {
             archived_links.add(link.getAttribute("href"));
             System.out.println(links.indexOf(link));
@@ -260,7 +235,7 @@ public class ClassTesting {
         js.executeScript("window.scrollBy(0,-3000)", "");
     }
 
-     @Test(priority = 8)
+    @Test(priority = 8)
     void comment_testing() throws InterruptedException {
         String comments = driver.findElement(By.className("comment_count")).getAttribute("href");
         driver.get(comments);
@@ -286,7 +261,7 @@ public class ClassTesting {
         Thread.sleep(2000);
     }
 
-        @Test(priority = 9)
+    @Test(priority = 9)
     void account_test() throws InterruptedException {
         //go to log in link
         driver.get(URL);
